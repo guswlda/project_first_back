@@ -10,17 +10,39 @@ const app = express(); // express 모듈을 app 변수 할당
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// 허용할 origin 리스트
 const allowedOrigins = [
-  'http://localhost:3001',
-  'https://plannerback.guswldaiccproject.com'
+  'http://localhost:3000',
+  'https://plannerback.guswldaiccproject.com',
+  'https://myplanner.guswldaiccproject.com'
 ];
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-  })
-);
+// CORS 설정
+app.use(cors({
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+}));
+
+// Preflight 요청 처리
+app.options('*', cors());
+
+// const allowedOrigins = [
+//   'http://localhost:3001',
+//   'https://plannerback.guswldaiccproject.com'
+// ];
+
+// app.use(
+//   cors({
+//     origin: allowedOrigins,
+//     credentials: true,
+//   })
+// );
 
 // app.use(
 //   cors({
