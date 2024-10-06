@@ -13,8 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     // origin: 'http://localhost:3000',
-    origin: 'https://myplanner.guswldaiccproject.com',
-    methods: 'GET,POST,PUT,DELETE',
+    origin: 'https://plannerback.guswldaiccproject.com',
     credentials: true,
   })
 );
