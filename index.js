@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: [
-      'http://localhost:3000',  // 로컬 테스트용 도메인
+      'http://localhost:3001',  // 로컬 테스트용 도메인
       'https://myplanner.guswldaiccproject.com' // 프로덕션 도메인
     ],
     credentials: true,
