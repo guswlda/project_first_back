@@ -2,25 +2,14 @@ const database = require('../database/database');
 const bcrypt = require('bcrypt');
 const salt = 10;
 const jwt = require('jsonwebtoken');
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuid4 } = require('uuid');
 
 // 회원 가입 처리 함수
 exports.postUser = async (req, res) => {
   try {
-<<<<<<< HEAD
-    // 사용자 정보가 모두 제공되었는지 확인
-    if (!req.body.name || !req.body.email || !req.body.password) {
-      return res.status(400).json({ message: 'All fields are required' });
-    }
-
-    const user_idx = uuidv4(); // 고유 사용자 ID 생성
-    const hash = await bcrypt.hash(String(req.body.password), saltRounds); // 비밀번호를 문자열로 변환하여 해시 생성
-    const values = [user_idx, req.body.name, req.body.email, hash]; // 사용자 고유 ID 포함
-=======
     const user_idx = uuid4(); // 고유 사용자 ID 생성
     const hash = await bcrypt.hash(req.body.password, salt); // 비밀번호 해시 생성
     const values = [req.body.name, req.body.email, hash];
->>>>>>> 76e534273cb437bc2757d57de3e9b7b26489f03b
 
     await database.query(
       'INSERT INTO users (name, email, password) VALUES ($1, $2, $3)',
