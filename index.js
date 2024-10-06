@@ -10,13 +10,25 @@ const app = express(); // express 모듈을 app 변수 할당
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://plannerback.guswldaiccproject.com'
+];
+
 app.use(
   cors({
-    // origin: 'http://localhost:3000',
-    origin: 'https://plannerback.guswldaiccproject.com',
+    origin: allowedOrigins,
     credentials: true,
   })
 );
+
+// app.use(
+//   cors({
+//     // origin: 'http://localhost:3000',
+//     origin: 'https://plannerback.guswldaiccproject.com',
+//     credentials: true,
+//   })
+// );
 
 // app.use(cors(corsOptions));
 
