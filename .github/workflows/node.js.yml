@@ -28,6 +28,4 @@ jobs:
       - run: |
           touch .env
           echo "${{ secrets.PRODUCTION_ENV_SECRET }}" > .env
-          echo "${{ secrets.SECRET_KEY }}" >> .env
-          echo "${{ secrets.MAP_API_KEY }}" >> .env
       - run: pm2 restart BackendAPI
