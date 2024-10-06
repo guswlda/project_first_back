@@ -14,6 +14,7 @@ app.use(
   cors({
     // origin: 'http://localhost:3000',
     origin: 'https://myplanner.guswldaiccproject.com',
+    methods: 'GET,POST,PUT,DELETE',
     credentials: true,
   })
 );
