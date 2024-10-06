@@ -12,20 +12,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: 'https://myplanner.guswldaiccproject.com', // 허용할 클라이언트 도메인
-    credentials: true, // 쿠키 및 인증 정보 포함 요청 허용
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // 허용할 HTTP 메소드
-    allowedHeaders: ['Content-Type', 'Authorization'], // 허용할 헤더
+    // origin: 'http://localhost:3000',
+    origin: 'https://myplanner.guswldaiccproject.com',
+    credentials: true,
   })
 );
-
-// app.use(
-//   cors({
-//     // origin: 'http://localhost:3000',
-//     origin: 'https://myplanner.guswldaiccproject.com',
-//     credentials: true,
-//   })
-// );
 
 // app.use(cors(corsOptions));
 
