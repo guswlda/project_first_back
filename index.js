@@ -56,7 +56,7 @@ app.post('/upload', upload.single('planner_img'), (req, res) => {
 });
 
 // Google Maps API 키 전달
-app.get('/api/google-maps', (req, res) => {
+app.get('/api/google-maps-config', (req, res) => {
   res.json({ googleMapsApiKey: process.env.MAP_API_KEY });
 });
 
