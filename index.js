@@ -12,23 +12,13 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    // origin: 'http://localhost:3000',
-    origin: 'https://myplanner.guswldaiccproject.com',
+    origin: [
+      'http://localhost:3001',  // 로컬 테스트용 도메인
+      'https://myplanner.guswldaiccproject.com' // 프로덕션 도메인
+    ],
     credentials: true,
   })
 );
-
-// app.use(cors(corsOptions));
-
-// const corsOption2 = {
-//   origin: 'http://localhost:3000', // 허용할 주소
-//   credentials: true, // 인증 정보 허용
-// };
-
-// const corsOptions = [
-//   'http://localhost:3000',
-//   'https://myplanner.guswldaiccproject.com',
-// ];
 
 app.use(cookieParser());
 
@@ -46,8 +36,8 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const fullName =
-      req.protocol + '://' + req.get('host') + '/uploads/' + req.file.filename;
-    cb(null, fullName + '_' + file.filename); // 파일 이름 설정 (중복 방지를 위해 타임스탬프 추가)
+      req.protocol + '://' + req.get('host') + '/uploads/' + file.originalname;
+    cb(null, fullName); // 파일 이름 설정 (중복 방지를 위해 타임스탬프 추가)
   },
 });
 
