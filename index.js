@@ -1,9 +1,10 @@
-const PORT = '8080'; // 8080 포트를 사용
+const PORT = 8080; // 8080 포트를 사용
 const express = require('express'); // express 모듈 사용
 const cors = require('cors'); // cors 모듈 사용
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const multer = require('multer'); // multer 모듈 사용
+require('dotenv').config(); // 환경 변수 관리
 
 const app = express(); // express 모듈을 app 변수 할당
 
@@ -35,31 +36,28 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/'); // 파일을 uploads 폴더에 저장
   },
   filename: function (req, file, cb) {
-    const fullName =
-      req.protocol + '://' + req.get('host') + '/uploads/' + file.originalname;
+    const fullName = `${Date.now()}_${file.originalname}`;
     cb(null, fullName); // 파일 이름 설정 (중복 방지를 위해 타임스탬프 추가)
   },
 });
 
 const upload = multer({ storage: storage });
 
-// 라우트 사용
+// 파일 업로드 라우트
 app.post('/upload', upload.single('planner_img'), (req, res) => {
   try {
     res.status(200).json({
       message: 'File uploaded successfully',
-      filename:
-        req.protocol +
-        '://' +
-        req.get('host') +
-        '/uploads/' +
-        req.file.filename,
+      filename: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: 'File upload failed', error: error.message });
+    res.status(500).json({ message: 'File upload failed', error: error.message });
   }
+});
+
+// Google Maps API 키 전달
+app.get('/api/google-maps', (req, res) => {
+  res.json({ googleMapsApiKey: process.env.MAP_API_KEY });
 });
 
 // 다른 라우트 설정
@@ -68,4 +66,4 @@ app.use(require('./routes/postRoutes'));
 app.use(require('./routes/updateRoutes'));
 app.use(require('./routes/deleteRoutes'));
 
-app.listen(PORT, () => console.log(`Server is running on ${PORT}`)); // 서버 실행 시 메시지 출력
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`)); // 서버 실행 시 메시지 출력

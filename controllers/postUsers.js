@@ -2,7 +2,7 @@ const database = require('../database/database');
 const bcrypt = require('bcrypt');
 const saltRounds = 10; // 솔트 라운드 수를 명확히 설정
 const jwt = require('jsonwebtoken');
-const { v4: uuid4 } = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 // 회원 가입 처리 함수
 exports.postUser = async (req, res) => {
@@ -12,7 +12,7 @@ exports.postUser = async (req, res) => {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    const user_idx = uuid4(); // 고유 사용자 ID 생성
+    const user_idx = uuidv4(); // 고유 사용자 ID 생성
     const hash = await bcrypt.hash(String(req.body.password), saltRounds); // 비밀번호를 문자열로 변환하여 해시 생성
     const values = [user_idx, req.body.name, req.body.email, hash]; // 사용자 고유 ID 포함
 
